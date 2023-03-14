@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1085680015658",
+    "project_id": "foodful-2f799",
+    "storage_bucket": "foodful-2f799.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085680015658:android:29277814d0abb87cd52653",
+        "android_client_info": {
+          "package_name": "com.example.foodful"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085680015658-i1pnq880sb2bhivsllqm463h2p2e5k6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXhZypBlqE9WwjtFAjvssfaZjFSWv67rs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085680015658-i1pnq880sb2bhivsllqm463h2p2e5k6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
