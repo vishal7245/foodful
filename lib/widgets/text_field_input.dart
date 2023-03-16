@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodful/utils/colors.dart';
 
 class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -8,12 +7,10 @@ class TextFieldInput extends StatelessWidget {
   final TextInputType textInputType;
 
   const TextFieldInput(
-      {Key key,
-      @required this.textEditingController,
+      {required this.textEditingController,
       this.isPass = false,
-      @required this.hintText,
-      @required this.textInputType})
-      : super(key: key);
+      required this.hintText,
+      required this.textInputType});
 
   @override
   Widget build(BuildContext context) {

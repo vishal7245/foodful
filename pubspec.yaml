@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.11.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -28,13 +28,16 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cloud_firestore: ^4.4.4
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.2.10
   firebase_core: ^2.7.1
   firebase_storage: ^11.0.15
-  cloud_firestore: ^4.4.4
   flutter:
     sdk: flutter
+  google_maps_flutter: ^2.2.5
+  image_picker: ^0.8.7
+  location: ^4.2.0
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +48,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/logo.png
+    - assets/pp.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

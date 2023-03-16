@@ -3,8 +3,6 @@ import '../widgets/text_field_input.dart';
 import '../utils/colors.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -39,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Image.asset('assets/logo.png'),
               const SizedBox(
-                height: 64,
+                height: 20,
               ),
               //input fields
               TextFieldInput(
@@ -60,27 +58,40 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 16,
               ),
               //login button
-              Container(
-                child: const Text('Login'),
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: const ShapeDecoration(
-                    color: purpleColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    )),
-              ),
-              const SizedBox(
-                height: 8,
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  child: const Text('Login'),
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  decoration: const ShapeDecoration(
+                      color: purpleColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                      )),
+                ),
               ),
               //signup
               Row(
                 children: [
-                  Text("If you dont have an account, "),
-                  Text(
-                    "Sign Up",
-                    style: TextStyle(color: pinkColor),
+                  Container(
+                    child: const Text("If you dont have an account, "),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        child: const Text(
+                          "Sign Up",
+                          style: TextStyle(
+                              color: pinkColor, fontWeight: FontWeight.bold),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
+                    ),
                   ),
                 ],
               )
