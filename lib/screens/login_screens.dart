@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../resources/auth_methods.dart';
+import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
 import '../utils/colors.dart';
 
@@ -10,12 +12,29 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    if (res == 'Signed In Successfully') {
+      showSnackBar(context, res);
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -59,18 +78,25 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               //login button
               InkWell(
-                onTap: () {},
-                child: Container(
-                  child: const Text('Login'),
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  decoration: const ShapeDecoration(
-                      color: purpleColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                      )),
-                ),
+                onTap: loginUser,
+                child: isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    : Container(
+                        child: const Text('Login'),
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        decoration: const ShapeDecoration(
+                            color: purpleColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                            )),
+                      ),
               ),
               //signup
               Row(

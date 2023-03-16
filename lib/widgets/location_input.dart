@@ -6,6 +6,9 @@ import '../helpers/location_helper.dart';
 import '../screens/signup_screen.dart';
 
 class LocationInput extends StatefulWidget {
+  final Function onSelectPlace;
+
+  LocationInput(this.onSelectPlace);
   @override
   State<LocationInput> createState() => _LocationInputState();
 }
@@ -25,6 +28,8 @@ class _LocationInputState extends State<LocationInput> {
     if (selectedLocation == null) {
       return;
     }
+
+    widget.onSelectPlace(selectedLocation.latitude, selectedLocation.longitude);
 
     LocationHelper.generateLocationPreviewImage(
       latitude: selectedLocation.latitude,

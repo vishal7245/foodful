@@ -23,6 +23,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
   bool isLoading = false;
+  double lat = 0;
+  double lng = 0;
 
   @override
   void dispose() {
@@ -49,6 +51,8 @@ class _SignupScreenState extends State<SignupScreen> {
       password: _passwordController.text,
       username: _usernameController.text,
       bio: _bioController.text,
+      latitude: lat,
+      longitude: lng,
       file: _image!,
     );
 
@@ -58,6 +62,11 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() {
       isLoading = false;
     });
+  }
+
+  void _selectPlace(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
   }
 
   @override
@@ -144,7 +153,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 10,
                   ),
                   //Location Input
-                  LocationInput(),
+                  LocationInput(_selectPlace),
                   const SizedBox(
                     height: 16,
                   ),

@@ -15,8 +15,8 @@ class AuthMethods {
     required String password,
     required String username,
     required String bio,
-    // required double latitude,
-    // required double longitude,
+    required double latitude,
+    required double longitude,
     required Uint8List file,
   }) async {
     String res = "Some Error Occurred";
@@ -24,7 +24,9 @@ class AuthMethods {
       if (email == null ||
           password == null ||
           username == null ||
-          bio == null) {
+          bio == null ||
+          latitude == null ||
+          longitude == null) {
         return "Please fill all the fields";
       } else {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
@@ -42,9 +44,29 @@ class AuthMethods {
           'bio': bio,
           'followers': [],
           'following': [],
+          'latitude': latitude,
+          'longitude': longitude,
           'photoUrl': photoUrl,
         });
         res = "Signed Up Successfully";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    String res = "Some Error Occurred";
+
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        res = "Logged In Successfully";
       }
     } catch (err) {
       res = err.toString();
