@@ -2,9 +2,13 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:foodful/screens/login_screens.dart';
 import 'package:foodful/utils/utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 import '../widgets/text_field_input.dart';
 import '../utils/colors.dart';
 import '../widgets/location_input.dart';
@@ -56,17 +60,34 @@ class _SignupScreenState extends State<SignupScreen> {
       file: _image!,
     );
 
-    if (res != 'Signed Up Successfully') {
-      showSnackBar(context, res);
-    }
     setState(() {
       isLoading = false;
     });
+    if (res != 'Signed Up Successfully') {
+      showSnackBar(context, res);
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    }
   }
 
   void _selectPlace(double lat, double lng) {
     this.lat = lat;
     this.lng = lng;
+  }
+
+  void navigateToSignIn() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(),
+      ),
+    );
   }
 
   @override
@@ -186,7 +207,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: navigateToSignIn,
                         child: Container(
                           child: const Text(
                             "Login",

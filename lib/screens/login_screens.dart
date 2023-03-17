@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:foodful/screens/signup_screen.dart';
 import '../resources/auth_methods.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 import '../utils/utils.dart';
 import '../widgets/text_field_input.dart';
 import '../utils/colors.dart';
@@ -29,12 +33,28 @@ class _LoginScreenState extends State<LoginScreen> {
       email: _emailController.text,
       password: _passwordController.text,
     );
-    if (res == 'Signed In Successfully') {
+    if (res == 'Logged In Successfully') {
       showSnackBar(context, res);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     }
     setState(() {
       isLoading = false;
     });
+  }
+
+  void navigateToSignUp() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SignupScreen(),
+      ),
+    );
   }
 
   @override
@@ -82,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: isLoading
                     ? Center(
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: pinkColor,
                         ),
                       )
                     : Container(
@@ -108,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   GestureDetector(
                     onTap: () {},
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: navigateToSignUp,
                       child: Container(
                         child: const Text(
                           "Sign Up",
