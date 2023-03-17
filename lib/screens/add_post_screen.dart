@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foodful/Providers/user_provider.dart';
 import 'package:foodful/models/user.dart';
+import 'package:foodful/resources/firestore_methods.dart';
 import 'package:foodful/utils/colors.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,10 @@ class addPost extends StatefulWidget {
 //   }
 
 class _addPostState extends State<addPost> {
+  bool isLoading = false;
   Uint8List? file;
   bool isVeg = false;
+  bool isEvent = false;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
@@ -35,8 +38,39 @@ class _addPostState extends State<addPost> {
     String uid,
     String username,
     String profilePic,
+    double latitude,
+    double longitude,
+    bool isVeg,
   ) async {
-    try {} catch (e) {}
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      String res = await FirestoreMethods().uploadPost(
+        _descriptionController.text,
+        _titleController.text,
+        _quantityController.text,
+        file!,
+        uid,
+        username,
+        profilePic,
+        latitude,
+        longitude,
+        isVeg,
+        isEvent,
+      );
+      setState(() {
+        isLoading = false;
+      });
+      if (res == "Post Uploaded") {
+        Navigator.pop(context);
+        showSnackBar(context, "Posted Successfully");
+      } else {
+        showSnackBar(context, res);
+      }
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 
   void _selectPlace(double lat, double lng) {
@@ -55,18 +89,6 @@ class _addPostState extends State<addPost> {
               padding: EdgeInsets.all(20),
               child: const Text('Photo with Camera'),
               onPressed: () async {
-                Uint8List file = await pickImage(ImageSource.camera)
-                    .whenComplete(() => Navigator.of(context).pop());
-                setState(() {
-                  this.file = file;
-                });
-              },
-            ),
-            SimpleDialogOption(
-              padding: EdgeInsets.all(20),
-              child: const Text('Image from Gallery'),
-              onPressed: () async {
-                Navigator.of(context).pop();
                 Uint8List file = await pickImage(ImageSource.camera)
                     .whenComplete(() => Navigator.of(context).pop());
                 setState(() {
@@ -103,7 +125,14 @@ class _addPostState extends State<addPost> {
           backgroundColor: lightpinkColor,
           actions: [
             TextButton(
-                onPressed: () {},
+                onPressed: () => postImage(
+                      user!.uid,
+                      user.username,
+                      user.photoUrl,
+                      lat,
+                      lng,
+                      isVeg,
+                    ),
                 child: const Text(
                   'Post',
                   style: TextStyle(
@@ -115,9 +144,13 @@ class _addPostState extends State<addPost> {
         ),
         body: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            isLoading
+                ? LinearProgressIndicator(
+                    color: pinkColor,
+                    backgroundColor: lightpinkColor,
+                  )
+                : const Padding(padding: EdgeInsets.only(top: 0)),
+            const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -130,7 +163,8 @@ class _addPostState extends State<addPost> {
                         )
                       : CircleAvatar(
                           radius: 50,
-                          backgroundImage: Image.asset('assets/pp.png').image,
+                          backgroundImage:
+                              Image.asset('assets/abstract.jpeg').image,
                           backgroundColor: Colors.white,
                         ),
                   Positioned(
@@ -193,7 +227,7 @@ class _addPostState extends State<addPost> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   child: TextField(
                     controller: _quantityController,
                     keyboardType: TextInputType.number,
@@ -210,7 +244,23 @@ class _addPostState extends State<addPost> {
                     ),
                   ),
                 ),
-                Text("Veg", style: const TextStyle(fontSize: 18)),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text("Event: ", style: const TextStyle(fontSize: 18)),
+                Switch(
+                    value: isEvent,
+                    onChanged: (value) {
+                      setState(() {
+                        isEvent = !isEvent;
+                      });
+                    }),
+                Text("Veg: ", style: const TextStyle(fontSize: 18)),
                 Switch(
                     value: isVeg,
                     onChanged: (value) {

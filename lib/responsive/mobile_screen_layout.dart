@@ -1,7 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foodful/screens/eventScreen.dart';
+import 'package:foodful/screens/people_screen.dart';
+import '../screens/profile_screen.dart';
+import 'package:foodful/screens/search_screen.dart';
 import 'package:foodful/utils/colors.dart';
+import '../screens/feed_screen.dart';
 
 import '../screens/add_post_screen.dart';
 
@@ -55,6 +61,9 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
     double displayWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
+          leading: Image.asset(
+            'assets/logo1.png',
+          ),
           actions: [
             IconButton(
               onPressed: () {
@@ -68,7 +77,14 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               icon: Icon(Icons.add, color: lightpinkColor),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchScreen(),
+                      fullscreenDialog: true,
+                    ));
+              },
               icon: Icon(Icons.search, color: lightpinkColor),
             ),
           ],
@@ -77,10 +93,12 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         ),
         body: PageView(
           children: [
-            Text("feed"),
-            Text("people"),
-            Text("events"),
-            Text("account"),
+            feedScreen(),
+            peopleScreen(),
+            eventScreen(),
+            ProfileScreen(
+              uid: FirebaseAuth.instance.currentUser!.uid,
+            ),
           ],
           controller: pageController,
           onPageChanged: onPageChanged,
