@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foodful/screens/eventScreen.dart';
-import 'package:foodful/screens/people_screen.dart';
+import 'package:foodful/screens/veg_screen.dart';
 import '../screens/profile_screen.dart';
 import 'package:foodful/screens/search_screen.dart';
 import 'package:foodful/utils/colors.dart';
@@ -20,14 +20,14 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   List<IconData> listOfIcons = [
     Icons.home_rounded,
     Icons.cake_rounded,
-    Icons.people_alt,
+    Icons.energy_savings_leaf_outlined,
     Icons.person_rounded,
   ];
 
   List<String> listOfStrings = [
     'Home',
-    'Events',
-    'People',
+    'Event',
+    'Veg',
     'Account',
   ];
   int currentIndex = 0;
@@ -95,7 +95,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           children: [
             feedScreen(),
             eventScreen(),
-            peopleScreen(),
+            vegScreen(),
             ProfileScreen(
               uid: FirebaseAuth.instance.currentUser!.uid,
             ),
