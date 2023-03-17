@@ -19,15 +19,15 @@ class MobileScreenLayout extends StatefulWidget {
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.people_alt,
     Icons.cake_rounded,
+    Icons.people_alt,
     Icons.person_rounded,
   ];
 
   List<String> listOfStrings = [
     'Home',
-    'People',
     'Events',
+    'People',
     'Account',
   ];
   int currentIndex = 0;
@@ -94,8 +94,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         body: PageView(
           children: [
             feedScreen(),
-            peopleScreen(),
             eventScreen(),
+            peopleScreen(),
             ProfileScreen(
               uid: FirebaseAuth.instance.currentUser!.uid,
             ),

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodful/utils/utils.dart';
-import 'package:intl/intl.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'like_animation.dart';
 import 'package:provider/provider.dart';
 import '../Providers/user_provider.dart';
@@ -172,7 +172,10 @@ class _postCardState extends State<postCard> {
                 ],
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    MapsLauncher.launchCoordinates(
+                        widget.snap['latitude'], widget.snap['longitude']);
+                  },
                   icon: const Icon(Icons.location_on_outlined)),
             ],
           ),
